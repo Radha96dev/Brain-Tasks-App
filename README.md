@@ -1,91 +1,178 @@
-DevOps Practice Project – Dist Directory
+# Brain Tasks DevOps Project
 
-This repository contains the production-ready build files (dist folder) for DevOps practice and deployment exercises.
+## Project Overview
 
-It is intentionally structured to help learners focus on CI/CD pipelines, hosting, containerization, and infrastructure setup rather than application development.
+This project demonstrates a complete DevOps workflow using Docker, Amazon ECR, Amazon EKS, AWS CodeBuild, AWS CodePipeline, and CloudWatch.
 
-📁 What This Repository Contains
+The application was deployed to Kubernetes running on Amazon EKS and automated through a CI/CD pipeline.
 
-dist/ – Compiled and production-ready static files
+---
 
-HTML
+## Architecture
 
-CSS
+GitHub Repository
+↓
+CodePipeline
+↓
+CodeBuild
+↓
+Amazon ECR
+↓
+Amazon EKS
+↓
+AWS LoadBalancer
+↓
+Application Access
 
-JavaScript
+---
 
-Assets (images, fonts, etc.)
+## Technologies Used
 
-These files are ready to deploy to:
+* GitHub
+* Docker
+* Amazon ECR
+* Amazon EKS
+* Kubernetes
+* AWS CodeBuild
+* AWS CodePipeline
+* Amazon CloudWatch
 
-Web servers (Nginx / Apache)
+---
 
-Cloud platforms (AWS S3, Azure Blob, GCP Storage)
+## Application Repository
 
-Containerized environments (Docker + Nginx)
+GitHub Repository:
 
-Kubernetes clusters
+https://github.com/Radha96dev/Brain-Tasks-App
 
-CI/CD pipeline demonstrations
+---
 
-🎯 Purpose of This Repository
+## Docker Implementation
 
-This repository is designed for:
+### Build Docker Image
 
-DevOps beginners
+```bash
+docker build -t brain-tasks-app .
+```
 
-CI/CD practice
+### Run Docker Container
 
-Deployment pipeline testing
+```bash
+docker run -d -p 3000:80 --name brain-tasks-app brain-tasks-app
+```
 
-Docker & Kubernetes deployment exercises
+---
 
-Web server configuration practice
+## Amazon ECR
 
-Reverse proxy and load balancer setup
+### Create Repository
 
-The goal is to simulate real-world deployment scenarios using already built application files.
+```bash
+aws ecr create-repository --repository-name brain-tasks-app
+```
 
-❓ Why is there NO package.json?
+### Push Image
 
-You may notice that this repository does not include:
+```bash
+docker push <ECR_IMAGE_URI>
+```
 
-package.json
+---
 
-node_modules
+## Kubernetes Deployment
 
-Source code (src/)
+### Deployment
 
-Build tools configuration
+deployment.yaml created with 2 replicas.
 
-✅ Reason:
+### Service
 
-This repository only contains the final production build output (dist), not the development source code.
+service.yaml created with LoadBalancer type.
 
-In a typical project:
+### Deploy Application
 
-Developers write source code.
+```bash
+kubectl apply -f deployment.yaml
+kubectl apply -f service.yaml
+```
 
-The project is built using tools like:
+### Verify
 
-Node.js
+```bash
+kubectl get deployments
+kubectl get pods
+kubectl get svc
+```
 
-Webpack
+---
 
-Vite
+## EKS Cluster
 
-React (or other frameworks)
+Cluster Name:
 
-A dist/ folder is generated.
+brain-cluster
 
-Only the production build is deployed to servers.
+---
 
-This repository represents step 4 only.
+## CI/CD Pipeline
 
-Since this is already the compiled output:
+### Source Stage
 
-No dependencies are required
+GitHub Repository
 
-No build process is required
+### Build Stage
 
-No package.json is needed
+AWS CodeBuild
+
+### Deploy Stage
+
+Amazon EKS
+
+Pipeline Flow:
+
+GitHub → CodeBuild → Amazon EKS
+
+---
+
+## Monitoring
+
+Amazon CloudWatch Logs used for:
+
+* CodeBuild Logs
+* CodePipeline Logs
+
+Log Groups:
+
+* /aws/codebuild/brain-tasks-build
+* /aws/codepipeline/brain-tasks-pipeline
+
+---
+
+## LoadBalancer Endpoint
+
+Replace with your current LoadBalancer DNS:
+
+aff53387fdb4b4f3ba0d5269c3d7bfb5-891360583.ap-south-1.elb.amazonaws.com
+
+---
+
+## Screenshots
+
+Include screenshots for:
+
+1. GitHub Repository
+2. Docker Build
+3. ECR Repository
+4. EKS Cluster
+5. Kubernetes Pods
+6. Kubernetes Service
+7. LoadBalancer Access
+8. CodeBuild Success
+9. CodePipeline Success
+10. CloudWatch Logs
+
+---
+
+## Project Status
+
+Project Completed Successfully.
